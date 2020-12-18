@@ -1,3 +1,11 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <Arduino.h>
+#include "Pair.h"
+
+typedef Pair<byte, byte> PIN;
+
 // Pins for each of the buttons, sticks, etc.
 PIN button_a = {22, INPUT_PULLUP}; // A
 PIN button_b = {23, INPUT_PULLUP}; // B
@@ -30,3 +38,5 @@ PIN trigger_left_b = {0, INPUT_PULLUP}; // left trigger digital input
 
 PIN trigger_right_a = {0, INPUT_PULLUP}; // right trigger analog input
 PIN trigger_right_b = {0, INPUT_PULLUP}; // right trigger digital input
+
+#endif // CONFIG_H
