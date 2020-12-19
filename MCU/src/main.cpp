@@ -2,7 +2,6 @@
 
 #include "BLEGamepad.h"
 
-
 #include "config.h"
 
 PIN pins[] = {
