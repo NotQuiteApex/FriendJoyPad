@@ -43,15 +43,15 @@ const u64 BTN_30 = BIT(29);
 const u64 BTN_31 = BIT(30);
 const u64 BTN_32 = BIT(31);
 
-const u8 DPAD_CENTER = 0;
-const u8 DPAD_UP = 1;
-const u8 DPAD_UP_RIGHT = 2;
-const u8 DPAD_RIGHT = 3;
-const u8 DPAD_DOWN_RIGHT = 4;
-const u8 DPAD_DOWN = 5;
-const u8 DPAD_DOWN_LEFT = 6;
-const u8 DPAD_LEFT = 7;
-const u8 DPAD_UP_LEFT = 8;
+const u8 DPAD_CENTER     = 0b0;
+const u8 DPAD_UP         = 0b0001;
+const u8 DPAD_UP_RIGHT   = 0b0010;
+const u8 DPAD_RIGHT      = 0b0011;
+const u8 DPAD_DOWN_RIGHT = 0b0100;
+const u8 DPAD_DOWN       = 0b0101;
+const u8 DPAD_DOWN_LEFT  = 0b0110;
+const u8 DPAD_LEFT       = 0b0111;
+const u8 DPAD_UP_LEFT    = 0b1000;
 
 class BLEGamepad {
 	private:

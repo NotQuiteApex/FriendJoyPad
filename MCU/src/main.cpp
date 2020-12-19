@@ -1,10 +1,11 @@
 #include <Arduino.h>
 
+#include "PinButton.h"
 #include "BLEGamepad.h"
 
 #include "config.h"
 
-PIN pins[] = {
+PinButton pins[] = {
 	button_a, button_b, button_x, button_y,
 	button_up, button_down, button_left, button_right,
 	stick_left_x, stick_left_y, stick_left_b,
@@ -20,7 +21,7 @@ BLEGamepad joypad;
 void setup () {
 	// Init pins
 	for (byte i = 0; i < (sizeof(pins) / sizeof(pins[0])); i++) {
-		pinMode(pins[i].first(), pins[i].second());
+		pins[i].init();
 	}
 
 	// Init serial
@@ -31,18 +32,38 @@ void setup () {
 }
 
 void loop () {
-	if (joypad.isConnected()) {
-		Serial.println("start1");
+	if (button_a.read()) {
 		joypad.press(BTN_1);
-		joypad.press(BTN_32);
-		joypad.setHat(DPAD_RIGHT);
-		joypad.send();
-		delay(500);
-		
-		Serial.println("srtat3");
-		joypad.release(BTN_1 | BTN_32);
-		joypad.setHat(DPAD_CENTER);
-		joypad.send();
-		delay(500);
+	} else {
+		joypad.release(BTN_1);
 	}
+
+	if (button_b.read()) {
+		joypad.press(BTN_2);
+	} else {
+		joypad.release(BTN_2);
+	}
+
+	if (button_x.read()) {
+		joypad.press(BTN_3);
+	} else {
+		joypad.release(BTN_3);
+	}
+
+	if (button_y.read()) {
+		joypad.press(BTN_4);
+	} else {
+		joypad.release(BTN_4);
+	}
+
+	u8 dpad = 0;
+	u8 up = button_up.read() ? DPAD_UP : DPAD_CENTER;
+
+	joypad.setHat(dpad);
+
+	if (joypad.isConnected()) {
+		joypad.send();
+	}
+
+	delay(5);
 }
