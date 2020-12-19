@@ -5,15 +5,15 @@
 #include "PinButton.h"
 
 // PinButtons for each of the buttons, sticks, etc.
-PinButton button_a = {22, INPUT_PULLUP}; // A
-PinButton button_b = {23, INPUT_PULLUP}; // B
-PinButton button_x = {3, INPUT_PULLUP};  // X
-PinButton button_y = {21, INPUT_PULLUP}; // Y
+PinButton button_a = {23, INPUT_PULLUP}; // A
+PinButton button_b = {3, INPUT_PULLUP};  // B
+PinButton button_x = {21, INPUT_PULLUP}; // X
+PinButton button_y = {22, INPUT_PULLUP}; // Y
 
 PinButton button_up    = {22, INPUT_PULLUP}; // DPAD up
 PinButton button_down  = {23, INPUT_PULLUP}; // DPAD down
-PinButton button_left  = {3, INPUT_PULLUP};  // DPAD left
-PinButton button_right = {21, INPUT_PULLUP}; // DPAD right
+PinButton button_left  = {21, INPUT_PULLUP}; // DPAD left
+PinButton button_right = {3, INPUT_PULLUP};  // DPAD right
 
 PinButton stick_left_x = {39, INPUT_PULLDOWN}; // left stick left and right
 PinButton stick_left_y = {36, INPUT_PULLDOWN}; // left stick up and down

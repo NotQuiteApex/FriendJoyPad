@@ -56,8 +56,24 @@ void loop () {
 		joypad.release(BTN_4);
 	}
 
+	// TODO: find a better way to read hat values.
 	u8 dpad = 0;
-	u8 up = button_up.read() ? DPAD_UP : DPAD_CENTER;
+	bool up    = button_up.read();
+	bool right = button_right.read();
+	bool down  = button_down.read();
+	bool left  = button_left.read();
+
+	if ((up || down) && (right || left)) {
+		if (up && right) dpad = DPAD_UP_RIGHT;
+		if (down && right) dpad = DPAD_DOWN_RIGHT;
+		if (down && left) dpad = DPAD_DOWN_LEFT;
+		if (up && left) dpad = DPAD_UP_LEFT;
+	} else {
+		if (up) dpad = DPAD_UP;
+		if (right) dpad = DPAD_RIGHT;
+		if (down) dpad = DPAD_DOWN;
+		if (left) dpad = DPAD_LEFT;
+	}
 
 	joypad.setHat(dpad);
 
