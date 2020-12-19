@@ -56,6 +56,7 @@ const u8 DPAP_UP_LEFT = 8;
 class BLEGamepad {
 	private:
 		u64 buttons = 0;
+		u8 hatDirection = 0;
 		String deviceName;
 		String deviceManufacturer;
 		BLEConnectionStatus * connectStatus;
@@ -65,6 +66,10 @@ class BLEGamepad {
 		BLEGamepad(String deviceName="FriendJoyPad", String deviceManufacturer="FriendTeamInc.");
 		void begin();
 		void end();
+		inline void press(u64 b) { this->buttons = this->buttons | b; };
+		inline void release(u64 b) { this->buttons = this->buttons | b; };
+		inline void setHat(u8 hat) { this->hatDirection = hat; };
+		void send();
 	protected:
 		virtual void onStarted(BLEServer * pServer) { };
 };

@@ -60,3 +60,11 @@ BLEGamepad::BLEGamepad (String deviceName, String deviceManufacturer) {
 	this->deviceManufacturer = deviceName;
 	this->connectStatus = new BLEConnectionStatus();
 }
+
+void BLEGamepad::begin () {
+	xTaskCreate();
+}
+
+void BLEGamepad::send () {
+
+}
