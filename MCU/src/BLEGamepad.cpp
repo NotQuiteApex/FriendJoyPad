@@ -55,16 +55,71 @@ const u8 _hidReportDescriptor[] = {
   END_COLLECTION(0)          //     END_COLLECTION
 };
 
-BLEGamepad::BLEGamepad (String deviceName, String deviceManufacturer) {
+BLEGamepad::BLEGamepad (std::string deviceName, std::string deviceManufacturer) {
 	this->deviceName = deviceName;
 	this->deviceManufacturer = deviceName;
 	this->connectStatus = new BLEConnectionStatus();
 }
 
 void BLEGamepad::begin () {
-	xTaskCreate();
+	xTaskCreate(this->taskServer, "server", 20000, (void*)this, 5, NULL);
 }
 
 void BLEGamepad::send () {
+	if (this->connectStatus->connected) {
+		u8 m[15];
 
+		m[0] = this->buttons;
+		m[1] = this->buttons >> 8;
+		m[2] = this->buttons >> 16;
+		m[3] = this->buttons >> 24;
+
+		m[4] = this->leftStickX;
+		m[5] = this->leftStickX >> 8;
+		m[6] = this->leftStickY;
+		m[7] = this->leftStickY >> 8;
+		
+		m[8] = this->rightStickX;
+		m[9] = this->rightStickX >> 8;
+		m[10] = this->rightStickY;
+		m[11] = this->rightStickY >> 8;
+
+		m[12] = this->leftTrigger;
+		m[13] = this->leftTrigger;
+
+		m[14] = this->hatDirection;
+
+		this->gamepad->setValue(m, sizeof(m));
+		this->gamepad->notify();
+	}
+}
+
+void BLEGamepad::taskServer (void * pvParameter) {
+	BLEGamepad * self = (BLEGamepad *) pvParameter;
+	BLEDevice::init(self->deviceName);
+	BLEServer * pServer = BLEDevice::createServer();
+	pServer->setCallbacks(self->connectStatus);
+
+	self->hid = new BLEHIDDevice(pServer);
+	self->gamepad = self->hid->inputReport(0);
+	self->connectStatus->inputGamepad = self->gamepad;
+
+	self->hid->manufacturer()->setValue(self->deviceManufacturer);
+	self->hid->pnp(0x1, 0x2e5, 0xabcc, 0x110);
+	self->hid->hidInfo(0x0, 0x1);
+	self->hid->reportMap((uint8_t*)_hidReportDescriptor, sizeof(_hidReportDescriptor));
+	self->hid->startServices();
+
+	// BLESecurity * pSecurity = new BLESecurity();
+	// pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
+
+	self->onStarted(pServer);
+
+	BLEAdvertising * pAdvert = pServer->getAdvertising();
+	pAdvert->setAppearance(HID_GAMEPAD);
+	pAdvert->addServiceUUID(self->hid->hidService()->getUUID());
+	pAdvert->start();
+	self->hid->setBatteryLevel(-1);
+
+	vTaskDelay(portMAX_DELAY);
 }
