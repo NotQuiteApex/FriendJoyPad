@@ -76,6 +76,8 @@ class BLEGamepad {
 		inline void press(u64 b) { this->buttons = this->buttons | b; };
 		inline void release(u64 b) { this->buttons = this->buttons & ~b; };
 		inline void setHat(u8 hat) { this->hatDirection = hat; };
+		inline void setLeftStick(u16 x, u16 y) { this->leftStickX = x; this->leftStickY = y; };
+		inline void setRightStick(u16 x, u16 y) { this->rightStickX = x; this->rightStickY = y; };
 		void send();
 		inline bool isConnected() { return this->connectStatus->connected; };
 	protected:

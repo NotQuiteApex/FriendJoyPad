@@ -75,6 +75,8 @@ void loop () {
 		if (left) dpad = DPAD_LEFT;
 	}
 
+	joypad.setLeftStick(stick_left_x.readAnalog(), stick_left_y.readAnalog());
+
 	joypad.setHat(dpad);
 
 	if (joypad.isConnected()) {

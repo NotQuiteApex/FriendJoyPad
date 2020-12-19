@@ -26,6 +26,10 @@ struct PinButton {
 		else
 			return val;
 	}
+
+	u16 readAnalog() {
+		return analogRead(this->pin);
+	}
 };
 
 

@@ -15,8 +15,8 @@ PinButton button_down  = {23, INPUT_PULLUP}; // DPAD down
 PinButton button_left  = {21, INPUT_PULLUP}; // DPAD left
 PinButton button_right = {3, INPUT_PULLUP};  // DPAD right
 
-PinButton stick_left_x = {39, INPUT_PULLDOWN}; // left stick left and right
-PinButton stick_left_y = {36, INPUT_PULLDOWN}; // left stick up and down
+PinButton stick_left_x = {36, INPUT_PULLDOWN}; // left stick left and right
+PinButton stick_left_y = {39, INPUT_PULLDOWN}; // left stick up and down
 PinButton stick_left_b = {32, INPUT_PULLUP};   // left stick button
 
 PinButton stick_right_x = {0, INPUT_PULLDOWN}; // right stick left and right
