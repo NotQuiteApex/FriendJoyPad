@@ -2,6 +2,7 @@
 #include <BLEHIDDevice.h>
 
 #include "BLEGamepad.h"
+#include "BLEConnection.h"
 
 const u8 _hidReportDescriptor[] = {
   USAGE_PAGE(1),       0x01, // USAGE_PAGE (Generic Desktop)
@@ -53,3 +54,9 @@ const u8 _hidReportDescriptor[] = {
   END_COLLECTION(0),         //     END_COLLECTION
   END_COLLECTION(0)          //     END_COLLECTION
 };
+
+BLEGamepad::BLEGamepad (String deviceName, String deviceManufacturer) {
+	this->deviceName = deviceName;
+	this->deviceManufacturer = deviceName;
+	this->connectStatus = new BLEConnectionStatus();
+}

@@ -3,6 +3,11 @@
 
 #include <Arduino.h>
 
+#include <BLEDevice.h>
+#include <BLEHIDDevice.h>
+
+#include "BLEConnection.h"
+
 #include "sh_types.h"
 
 const u64 BTN_1  = BIT64(1);
@@ -51,10 +56,17 @@ const u8 DPAP_UP_LEFT = 8;
 class BLEGamepad {
 	private:
 		u64 buttons = 0;
+		String deviceName;
+		String deviceManufacturer;
+		BLEConnectionStatus * connectStatus;
+		BLEHIDDevice * hid;
+		BLECharacteristic * gamepad;
 	public:
-		BLEGamepad(String deviceName="FriendJoyPad", String deviceManufacturer="FriendTeamInc.", u8 batteryLevel=100);
+		BLEGamepad(String deviceName="FriendJoyPad", String deviceManufacturer="FriendTeamInc.");
 		void begin();
 		void end();
+	protected:
+		virtual void onStarted(BLEServer * pServer) { };
 };
 
 #undef BIT
