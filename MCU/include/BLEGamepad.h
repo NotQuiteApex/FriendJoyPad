@@ -44,14 +44,14 @@ const u64 BTN_31 = BIT(30);
 const u64 BTN_32 = BIT(31);
 
 const u8 DPAD_CENTER = 0;
-const u8 DPAP_UP = 1;
-const u8 DPAP_UP_RIGHT = 2;
-const u8 DPAP_RIGHT = 3;
-const u8 DPAP_DOWN_RIGHT = 4;
-const u8 DPAP_DOWN = 5;
-const u8 DPAP_DOWN_LEFT = 6;
-const u8 DPAP_LEFT = 7;
-const u8 DPAP_UP_LEFT = 8;
+const u8 DPAD_UP = 1;
+const u8 DPAD_UP_RIGHT = 2;
+const u8 DPAD_RIGHT = 3;
+const u8 DPAD_DOWN_RIGHT = 4;
+const u8 DPAD_DOWN = 5;
+const u8 DPAD_DOWN_LEFT = 6;
+const u8 DPAD_LEFT = 7;
+const u8 DPAD_UP_LEFT = 8;
 
 class BLEGamepad {
 	private:
@@ -74,9 +74,10 @@ class BLEGamepad {
 		void begin();
 		void end();
 		inline void press(u64 b) { this->buttons = this->buttons | b; };
-		inline void release(u64 b) { this->buttons = this->buttons | b; };
+		inline void release(u64 b) { this->buttons = this->buttons & ~b; };
 		inline void setHat(u8 hat) { this->hatDirection = hat; };
 		void send();
+		inline bool isConnected() { return this->connectStatus->connected; };
 	protected:
 		virtual void onStarted(BLEServer * pServer) { };
 };
