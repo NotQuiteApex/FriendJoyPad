@@ -32,6 +32,21 @@ void setup () {
 }
 
 void loop () {
+	// BTN_1 = A
+	// BTN_2 = B
+	// BTN_3 = X
+	// BTN_4 = Y
+	// BTN_5 = Shoulder Left Down
+	// BTN_6 = Shoulder Right Down
+	// BTN_7 = Start
+	// BTN_8 = Select
+	// BTN_9 = Share
+	// BTN_10 = Home
+	// BTN_11 = Shoulder Left Move Left
+	// BTN_12 = Shoulder Left Move Right
+	// BTN_13 = Shoulder Right Move Left
+	// BTN_14 = Shoulder Right Move Right
+
 	if (button_a.read()) {
 		joypad.press(BTN_1);
 	} else {
@@ -74,14 +89,52 @@ void loop () {
 		if (down) dpad = DPAD_DOWN;
 		if (left) dpad = DPAD_LEFT;
 	}
+	
+	joypad.setHat(dpad);
 
 	joypad.setLeftStick(stick_left_x.readAnalog(), stick_left_y.readAnalog());
 
-	joypad.setHat(dpad);
+	// Rotary encoders
+	joypad.release(BTN_11 | BTN_12 | BTN_13 | BTN_14);
+	static u8 lastLeftState = 0;
+	u8 encoderState = (shoulder_left_1.read() << 1) | (shoulder_left_2.read());
+	if (encoderState != lastLeftState) {
+		switch (encoderState) {
+			case 0:
+				if (lastLeftState == 2) {
+					//joypad.press(BTN_11);
+				} else if (lastLeftState == 1) {
+					//joypad.press(BTN_12);
+				}
+				break;
+			case 1:
+				if (lastLeftState == 0) {
+					joypad.press(BTN_11);
+				} else if (lastLeftState == 3) {
+					joypad.press(BTN_12);
+				}
+				break;
+			case 2:
+				if (lastLeftState == 3) {
+					//joypad.press(BTN_11);
+				} else if (lastLeftState == 0) {
+					//joypad.press(BTN_12);
+				}
+				break;
+			case 3:
+				if (lastLeftState == 1) {
+					joypad.press(BTN_11);
+				} else if (lastLeftState == 2) {
+					joypad.press(BTN_12);
+				}
+				break;
+		}
+		lastLeftState = encoderState;
+	}
 
 	if (joypad.isConnected()) {
 		joypad.send();
 	}
 
-	delay(5);
+	delay(10);
 }
