@@ -57,8 +57,8 @@ class BLEGamepad {
 	private:
 		u64 buttons = 0;
 		u8 hatDirection = 0;
-		u16 leftStickX = 0, leftStickY = 0;
-		u16 rightStickX = 0, rightStickY = 0;
+		s16 leftStickX = 0, leftStickY = 0;
+		s16 rightStickX = 0, rightStickY = 0;
 		u8 leftTrigger = 0, rightTrigger = 0;
 
 		std::string deviceName;
@@ -76,8 +76,8 @@ class BLEGamepad {
 		inline void press(u64 b) { this->buttons = this->buttons | b; };
 		inline void release(u64 b) { this->buttons = this->buttons & ~b; };
 		inline void setHat(u8 hat) { this->hatDirection = hat; };
-		inline void setLeftStick(u16 x, u16 y) { this->leftStickX = x; this->leftStickY = y; };
-		inline void setRightStick(u16 x, u16 y) { this->rightStickX = x; this->rightStickY = y; };
+		inline void setLeftStick(u16 x, u16 y) { this->leftStickX = x - 2048; this->leftStickY = y - 2048; };
+		inline void setRightStick(u16 x, u16 y) { this->rightStickX = x - 2048; this->rightStickY = y - 2048; };
 		void send();
 		inline bool isConnected() { return this->connectStatus->connected; };
 	protected:
